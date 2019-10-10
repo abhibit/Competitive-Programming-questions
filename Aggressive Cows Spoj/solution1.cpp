@@ -1,42 +1,42 @@
-#include<bits/stdc++.h>
+#include "bits/stdc++.h"
 using namespace std;
-
-int main(){
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
-  long long t,n,c;
-  cin>>t;
-  vector<long long> ans;
-  
-  while(t--){
-    cin>>n>>c;
-    long long x[n];
-    long long mind=LLONG_MAX;
-    for(long long i=0;i<n;i++){
-      cin>>x[i];
-      mind=min(x[i],mind);
+typedef unsigned long long ull;
+typedef long long int ll;
+typedef vector<long long int> vi;
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(NULL);cout.tie(NULL);
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,c;
+        cin>>n>>c;
+        ll a[100009];
+        for(int i=0;i<n;i++)
+            cin>>a[i];
+        sort(a,a+n);
+        ll i=1,j=1000000001,ans=0,l=0;
+        while(i<=j)
+        {
+            ll mid=((j+i)/2);
+            int fi=a[0],temp=1;
+            for(int k=1;k<n;k++)
+            {
+                if(a[k]-fi>=mid)
+                    temp++,fi=a[k];
+            }
+            if(temp<c)
+                j=mid-1;
+            else
+            {
+                ans=mid;
+                i=mid+1;
+            }
+        }
+        cout<<ans<<endl;
     }
-    sort(x,x+n);
-
-    long long low=mind;
-    long long high=x[n-1]-x[0];
-    long long mid;
-
-    while(low < high){
-      mid = low+(high-low+1)/2;
-      long long cows=1;
-      long long idx=0;
-      for(long long i=1;i<n;i++){
-        if(x[i]-x[idx] >= mid) {cows++; idx=i;}
-      }
-      if(cows >= c) low=mid;
-      else high=mid-1;
-    }
-    ans.push_back(low);
-  }
-
-  for(vector<long long>::iterator it=ans.begin();it!=ans.end();it++){
-    cout<<*it<<endl;
-  }
-  return 0;
+    return 0;
 }
